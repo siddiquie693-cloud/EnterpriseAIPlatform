@@ -1,10 +1,16 @@
+import os
+import pickle
+
 import faiss
 import numpy as np
 
 class VectorService:
     """
-    Service for creating and searching a FAISS vector index.
+    Service for creating, saving, loading, and searching a FAISS vector index.
     """
+
+    INDEX_FILE = "vector_store/index.faiss"
+    CHUNKS_FILE = "vector_store/chunks.pkl"
 
     def __init__(self, dimension=384):
         self.dimension = dimension
@@ -36,4 +42,26 @@ class VectorService:
             if idx != -1:
                 results.append(self.chunks[idx])
         return results
+    
+    def save_index(self):
+        """
+        Save FAISS index and chunks to disk.
+        """
+        os.makedirs("vector_store", exist_ok=True)
+
+        faiss.write_index(self.index, self.INDEX_FILE)
+
+        with open(self.CHUNKS_FILE, "wb") as file:
+            pickle.dump(self.chunks, file)
+
+    def load_index(self):
+        """
+        Load FAISS index and chunks from disk.
+        """
+        if os.path.exists(self.INDEX_FILE):
+            self.index = faiss.read_index(self.INDEX_FILE)
+
+        if os.path.exists(self.CHUNKS_FILE):
+            with open(self.CHUNKS_FILE, "rb") as file:
+                self.chunks = pickle.load(file)            
                  
