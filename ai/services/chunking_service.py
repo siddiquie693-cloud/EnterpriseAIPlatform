@@ -4,7 +4,7 @@ class ChunkingService:
     """
 
     @staticmethod
-    def split_text(text: str, chunk_size: int = 1000, overlap: int = 200):
+    def chunk_text(text: str, chunk_size: int = 1000, overlap: int = 200):
         """
         split text into overlapping chunks.
 

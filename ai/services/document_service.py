@@ -1,4 +1,5 @@
 from pypdf import PdfReader
+import os
 
 class DocumentService:
     """
@@ -7,6 +8,10 @@ class DocumentService:
 
     @staticmethod
     def extract_text(file_path: str) -> str:
+        print(f"Reading file: {file_path}")
+        print(f"Exists: {os.path.exists(file_path)}")
+        print(f"Size: {os.path.getsize(file_path)} bytes")
+        
         reader = PdfReader(file_path)
 
         text = ""
