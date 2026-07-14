@@ -79,7 +79,7 @@ class LLMService:
             raise LLMServiceError(f"Unexpected Error: {str(exc)}")
     
     @staticmethod
-    def answer_question(document: str, question: str) -> str:
+    def answer_question(document: str, question: str, history=None) -> str:
         try:
             logger.info("Answering question from document")
 
@@ -87,16 +87,38 @@ class LLMService:
                 document=document,
                 question=question,
             )
+
+            messages = []
+
+            # System instruction
+            messages.append(
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a helpful AI assistent. "
+                        "Use the provided document context and the previous "
+                        "conversation to answer naturally."
+                    ),
+                }
+            )
+
+            # Previous conversation 
+            if history:
+                messages.extend(history)
+
+            # Current question 
+            messages.append(
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            )    
             response = client.chat.completions.create(
                 model=settings.GROQ_MODEL,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    }
-                ],
+                messages=messages,
                 temperature=0.2,
             )
+            
             logger.info("Question answered successfully")
 
             return response.choices[0].message.content 

@@ -1,6 +1,7 @@
 from ai.services.embedding_service import EmbeddingService
 from ai.services.vector_service import VectorService
 from ai.services.llm_service import LLMService
+from ai.models import Conversation
 
 class RAGService:
     """
@@ -21,9 +22,10 @@ class RAGService:
         embeddings = self.embedding_service.generate_embeddings(chunks)
         self.vector_service.add_embeddings(embeddings, chunks)
 
-    def answer_question(self, question, document_id=None, top_k=3):
+    def answer_question(self, question, document_id=None, conversation_id=None, top_k=3):
         """
-        Answer a question using retrieved document context.
+        Answer a question using retrieved document context
+        and previous conversation history.
         """
 
         # Load saved FAISS index
@@ -35,9 +37,26 @@ class RAGService:
 
         context = "\n\n".join(context_chunks)
 
+        history = []
+
+        if conversation_id:
+            try:
+                conversation = Conversation.objects.get(id=conversation_id)
+
+                for message in conversation.messages.all():
+                    history.append(
+                        {
+                            "role": message.role,
+                            "content": message.content,
+                        }
+                    )
+            except Conversation.DoesNotExist:
+                pass        
+
         answer = self.llm_service.answer_question(
             document=context,
             question=question,
+            history=history,
         )
 
         return {
