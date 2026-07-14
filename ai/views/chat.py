@@ -24,9 +24,15 @@ class ChatAPIView(APIView):
             
         prompt = serializer.validated_data["prompt"]
 
+        # Optional document ID
+        document_id = request.data.get("document_id")
+
+        if document_id:
+            document_id = int(document_id)
+
         rag_service = RAGService()
 
-        result = rag_service.answer_question(prompt)
+        result = rag_service.answer_question(question=prompt, document_id=document_id,)
 
         return Response(
             result,

@@ -37,7 +37,7 @@ class DocumentIndexService:
         self.vector_service.load_index()
 
         # Add new document embeddings 
-        self.vector_service.add_embeddings(embeddings, chunks,)
+        self.vector_service.add_embeddings(embeddings, chunks, document_id=document.id,)
 
         # save updated FAISS index 
         self.vector_service.save_index() 

@@ -17,7 +17,7 @@ class VectorService:
         self.index = faiss.IndexFlatL2(dimension)
         self.chunks = []
 
-    def add_embeddings(self, embeddings, chunks):
+    def add_embeddings(self, embeddings, chunks, document_id=None):
         """
         Add embeddings and corresponding text chunks.
         """
@@ -25,23 +25,51 @@ class VectorService:
         embeddings = np.array(embeddings).astype("float32")
 
         self.index.add(embeddings)
-        self.chunks.extend(chunks)
 
-    def search(self, query_embedding, top_k=3):
+        for chunk in chunks:
+            self.chunks.append({"document_id": document_id, "text": chunk,})
+
+    def search(self, query_embedding, top_k=3, document_id=None):
         """
         Return top-k most similar chunks.
         """
+        
 
         query_embedding = np.array([query_embedding]).astype("float32")
 
-        distances, indices = self.index.search(query_embedding, top_k)
+        distances, indices = self.index.search(query_embedding, max(top_k * 5, top_k),)
 
+        
         results = []
 
         for idx in indices[0]:
-            if idx != -1:
-                results.append(self.chunks[idx])
+            if idx == -1:
+                continue
+
+            if idx >= len(self.chunks):
+            
+                continue
+
+
+            chunk = self.chunks[idx]
+
+            
+            if document_id is not None and chunk["document_id"] != document_id:
+    
+                continue
+            
+
+            results.append(chunk["text"])
+
+            if len(results) == top_k:
+                break
+
+        
+
         return results
+      
+            
+        
     
     def save_index(self):
         """

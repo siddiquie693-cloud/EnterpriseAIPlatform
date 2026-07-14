@@ -21,7 +21,7 @@ class RAGService:
         embeddings = self.embedding_service.generate_embeddings(chunks)
         self.vector_service.add_embeddings(embeddings, chunks)
 
-    def answer_question(self, question, top_k=3):
+    def answer_question(self, question, document_id=None, top_k=3):
         """
         Answer a question using retrieved document context.
         """
@@ -31,7 +31,7 @@ class RAGService:
 
         query_embedding = self.embedding_service.generate_embedding(question)
 
-        context_chunks = self.vector_service.search(query_embedding, top_k=top_k)
+        context_chunks = self.vector_service.search(query_embedding, top_k=top_k, document_id=document_id,)
 
         context = "\n\n".join(context_chunks)
 
