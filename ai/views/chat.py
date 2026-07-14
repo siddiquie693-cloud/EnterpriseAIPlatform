@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from ai.serializers import ChatSerializer
 from ai.services.llm_service import LLMService
 from ai.services.rag_service import RAGService
+from ai.models import Conversation, Message
 
 class ChatAPIView(APIView):
     """
@@ -30,9 +31,30 @@ class ChatAPIView(APIView):
         if document_id:
             document_id = int(document_id)
 
+        # Create a new conversation
+        conversation = Conversation.objects.create(
+            user=request.user,
+            title=prompt[:50],
+        )
+
+        # Save user message
+        Message.objects.create(
+            conversation=conversation,
+            role="user",
+            content=prompt,
+        )    
+
         rag_service = RAGService()
 
         result = rag_service.answer_question(question=prompt, document_id=document_id,)
+
+        # Save AI response 
+        Message.objects.create(
+            conversation=conversation,
+            role="assistant",
+            content=result["answer"],
+        )
+        result["conversation_id"] = conversation.id
 
         return Response(
             result,

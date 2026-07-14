@@ -3,11 +3,13 @@ from ai.views import (
      ChatAPIView, 
      SummarizeAPIView,
      AskQuestionAPIView,
+     ConversationListAPIView,
 )
 
 urlpatterns = [
     path("chat/", ChatAPIView.as_view(), name="ai-chat",),
     path("summarize/<int:document_id>/", SummarizeAPIView.as_view(), name="summarize",),
     path("ask/<int:document_id>/", AskQuestionAPIView.as_view(), name="ask-question",),
+    path("conversations/", ConversationListAPIView.as_view(), name="conversation-list",),
 
 ]
