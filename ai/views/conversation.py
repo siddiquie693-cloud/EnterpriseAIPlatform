@@ -14,3 +14,16 @@ class ConversationListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return Conversation.objects.filter(user=self.request.user)
+    
+class ConversationDetailAPIView(generics.RetrieveAPIView):
+    """
+    Retrieve a single conversation with all messages.
+    """
+
+    serializer_class = ConversationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Conversation.objects.filter(
+            user=self.request.user
+        )    

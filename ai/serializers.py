@@ -13,20 +13,6 @@ class QuestionSerializer(serializers.Serializer):
         trim_whitespace=True,
     )
 
-class ConversationSerializer(serializers.ModelSerializer):
-    """
-    Serializer for conversations.
-    """
-
-    class Meta:
-        model = Conversation
-        fields = (
-            "id",
-            "title",
-            "created_at",
-            "updated_at",
-        )
-
 class MessageSerializer(serializers.ModelSerializer):
     """
     Serializer for chat messages.
@@ -40,3 +26,24 @@ class MessageSerializer(serializers.ModelSerializer):
             "content",
             "created_at",
         )                
+
+class ConversationSerializer(serializers.ModelSerializer):
+    """
+    Serializer for conversations.
+    """
+
+    messages = MessageSerializer(
+        many=True,
+        read_only=True,
+    )
+
+    class Meta:
+        model = Conversation
+        fields = (
+            "id",
+            "title",
+            "created_at",
+            "updated_at",
+            "messages",
+        )
+

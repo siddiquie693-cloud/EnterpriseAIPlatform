@@ -4,6 +4,7 @@ from ai.views import (
      SummarizeAPIView,
      AskQuestionAPIView,
      ConversationListAPIView,
+     ConversationDetailAPIView,
 )
 
 urlpatterns = [
@@ -11,5 +12,6 @@ urlpatterns = [
     path("summarize/<int:document_id>/", SummarizeAPIView.as_view(), name="summarize",),
     path("ask/<int:document_id>/", AskQuestionAPIView.as_view(), name="ask-question",),
     path("conversations/", ConversationListAPIView.as_view(), name="conversation-list",),
+    path("conversations/<int:pk>/", ConversationDetailAPIView.as_view(), name="conversation-detail",),
 
 ]

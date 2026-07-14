@@ -14,7 +14,7 @@ class Conversation(models.Model):
         related_name="conversations",
     )
 
-    create_at = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
     )
 
