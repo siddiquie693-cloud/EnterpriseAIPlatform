@@ -1,10 +1,12 @@
 from django.urls import path
 from ai.views import (
-     ChatAPIView, 
+     ChatAPIView,
+     StreamingChatAPIView, 
      SummarizeAPIView,
      AskQuestionAPIView,
      ConversationListAPIView,
      ConversationDetailAPIView,
+    
 )
 
 urlpatterns = [
@@ -13,5 +15,6 @@ urlpatterns = [
     path("ask/<int:document_id>/", AskQuestionAPIView.as_view(), name="ask-question",),
     path("conversations/", ConversationListAPIView.as_view(), name="conversation-list",),
     path("conversations/<int:pk>/", ConversationDetailAPIView.as_view(), name="conversation-detail",),
+    path("chat/stream/", StreamingChatAPIView.as_view(), name="ai-chat-stream",),
 
 ]

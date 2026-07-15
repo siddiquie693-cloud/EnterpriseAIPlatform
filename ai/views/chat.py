@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import StreamingHttpResponse
 
 from ai.serializers import ChatSerializer
 from ai.services.rag_service import RAGService
@@ -89,3 +90,24 @@ class ChatAPIView(APIView):
             result,
             status=status.HTTP_200_OK,
         )
+    
+class StreamingChatAPIView(APIView):
+    """
+    Stream AI response in real time.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        prompt = request.data.get("prompt")
+
+        if not prompt:
+            return Response(
+                {"error": "Prompt is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return StreamingHttpResponse(
+            LLMService.stream_chat(prompt),
+            content_type="text/plain",
+        )    

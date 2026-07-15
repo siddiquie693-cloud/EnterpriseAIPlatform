@@ -165,7 +165,48 @@ class LLMService:
 
         except Exception as exc:
             logger.exception("Unexpected Title Generation Error")
-            raise LLMServiceError(f"Unexpected Error: {str(exc)}")    
+            raise LLMServiceError(f"Unexpected Error: {str(exc)}")   
+
+    @staticmethod
+    def stream_chat(prompt: str):
+        """
+        Stream chat response from Groq.
+        """
+        try:
+            logger.info("Streaming response from Groq")
+
+            stream = client.chat.completions.create(
+                model=settings.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": CHAT_PROMPT,
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    },
+                ],
+                temperature=0.7,
+                stream=True,
+            )
+
+            for chunk in stream:
+                if (
+                    chunk.choices
+                    and chunk.choices[0].delta.content
+                ):
+                    yield chunk.choices[0].delta.content
+
+            logger.info("Streaming completed")
+        except APIError as exc:
+            logger.exception("Groq Streaming API Error")
+            yield f"\nError: {str(exc)}"
+
+        except Exception as exc:
+            logger.exception("Unexpected Streaming Error")
+            yield f"\nError: {str(exc)}"        
+
 
 
 
