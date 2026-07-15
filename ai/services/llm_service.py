@@ -5,6 +5,7 @@ from ai.prompts import (
     CHAT_PROMPT,
     SUMMARY_PROMPT,
     QUESTION_PROMPT,
+    TITLE_PROMPT,
 
 )
 
@@ -130,6 +131,41 @@ class LLMService:
         except Exception as exc:
             logger.exception("Unexpected Question Answering Error")
             raise LLMServiceError(f"Unexpected Error: {str(exc)}")
+        
+    @staticmethod
+    def generate_title(question: str) -> str:
+        """
+        Generate a short AI title for a conversation.
+        """
+        try:
+            logger.info("Generating conversation title")
+
+            prompt = TITLE_PROMPT.format(
+                question=question,
+            )
+
+            response = client.chat.completions.create(
+                model=settings.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+                temperature=0.2,
+            )
+
+            logger.info("Conversation title generated successfully")
+
+            return response.choices[0].message.content.strip()
+
+        except APIError as exc:
+            logger.exception("Groq Title Generation API Error")
+            raise LLMServiceError(f"Groq Title Generation Error: {str(exc)}")
+
+        except Exception as exc:
+            logger.exception("Unexpected Title Generation Error")
+            raise LLMServiceError(f"Unexpected Error: {str(exc)}")    
 
 
 

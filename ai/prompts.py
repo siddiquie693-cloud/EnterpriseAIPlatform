@@ -28,3 +28,18 @@ Document:
 Question:
 {question}
 """
+
+TITLE_PROMPT = """
+You are an AI assistant.
+
+Generate a short and meaningful title (maximum 5 words) for the following user query.
+
+Rules:
+- Return only the title.
+- No quotation marks.
+- No numbering.
+- No explanation.
+
+User Query:
+{question}
+"""

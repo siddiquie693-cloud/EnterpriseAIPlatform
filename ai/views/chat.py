@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from ai.serializers import ChatSerializer
 from ai.services.rag_service import RAGService
 from ai.models import Conversation, Message
+from ai.services.llm_service import LLMService
 
 class ChatAPIView(APIView):
     """
@@ -49,9 +50,16 @@ class ChatAPIView(APIView):
                     status=status.HTTP_404_NOT_FOUND,
                 )
         else:
+            # Generate AI title 
+            try:
+                title = LLMService.generate_title(prompt)
+            except Exception:
+                # Fallback if title generation fails 
+                title = prompt[:100]
+
             conversation = Conversation.objects.create(
                 user=request.user,
-                title=prompt[:100],
+                title=title,
             )      
 
         # Save user message
