@@ -53,15 +53,22 @@ class VectorService:
 
             chunk = self.chunks[idx]
 
+            # Filter by document only if requested 
+
             
-            if document_id is not None and chunk["document_id"] != document_id:
-    
+            if (document_id is not None and chunk["document_id"] != document_id):
+                
                 continue
             
 
-            results.append(chunk["text"])
+            results.append(
+                {
+                    "document_id": chunk["document_id"],
+                    "text": chunk["text"],
+                }
+            )
 
-            if len(results) == top_k:
+            if len(results) >= top_k:
                 break
 
         

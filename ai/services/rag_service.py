@@ -35,7 +35,11 @@ class RAGService:
 
         context_chunks = self.vector_service.search(query_embedding, top_k=top_k, document_id=document_id,)
 
-        context = "\n\n".join(context_chunks)
+        context = "\n\n".join(
+            chunk["text"]
+            for chunk in context_chunks
+
+        )
 
         history = []
 
@@ -62,5 +66,11 @@ class RAGService:
         return {
             "question": question,
             "context": context_chunks,
+            "sources": list(
+                {
+                    chunk["document_id"]
+                    for chunk in context_chunks
+                }
+            ),
             "answer": answer,
         }
