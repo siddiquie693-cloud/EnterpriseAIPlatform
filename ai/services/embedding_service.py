@@ -1,15 +1,22 @@
 from sentence_transformers import SentenceTransformer
+
 class EmbeddingService:
     """
     Service for generating text embeddings using sentenceTransformer.
     """
-    def __init__(self):
-        self.model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-    def generate_embedding(self, text: str):
-        """
-        Generate embeddings for a single text.
-        """
+    _model = None
+
+    def __init__(self):
+        if EmbeddingService._model is None:
+            EmbeddingService._model = SentenceTransformer(
+                "sentence-transformers/all-MiniLM-L6-v2",
+                local_files_only=True,
+            )
+
+        self.model = EmbeddingService._model
+
+    def generate_embedding(self, text):
         return self.model.encode(text)
 
     def generate_embeddings(self, texts):

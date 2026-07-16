@@ -41,6 +41,7 @@ class VectorService:
 
         
         results = []
+        seen = set()
 
         for idx in indices[0]:
             if idx == -1:
@@ -61,12 +62,9 @@ class VectorService:
                 continue
             
 
-            results.append(
-                {
-                    "document_id": chunk["document_id"],
-                    "text": chunk["text"],
-                }
-            )
+            if chunk["text"] not in seen:
+                seen.add(chunk["text"])
+                results.append(chunk)
 
             if len(results) >= top_k:
                 break
