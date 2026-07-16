@@ -33,10 +33,10 @@ class RAGService:
 
         query_embedding = self.embedding_service.generate_embedding(question)
 
-        context_chunks = self.vector_service.search(query_embedding, top_k=top_k, document_id=document_id,)
+        search_results = self.vector_service.search(query_embedding, top_k=top_k, document_id=document_id,)
 
         context = "\n\n".join(
-            chunk["text"] for chunk in context_chunks
+            chunk["text"] for chunk in search_results
 
         )
 
@@ -64,19 +64,13 @@ class RAGService:
 
         return {
             "question": question,
-            "context": context_chunks,
+            "context": search_results,
             "sources": list(
                 {
                     chunk["document_id"]
-                    for chunk in context_chunks
+                    for chunk in search_results
                 }
             ),
-            "citations": [
-                {
-                    "document_id": chunk["document_id"],
-                    "text": chunk["text"][:250] + "...",
-                }
-                for chunk in context_chunks
-            ],
+            "citations": search_results,
             "answer": answer,
         }

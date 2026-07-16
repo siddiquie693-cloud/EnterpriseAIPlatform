@@ -31,7 +31,7 @@ class VectorService:
 
     def search(self, query_embedding, top_k=3, document_id=None):
         """
-        Return top-k most similar chunks.
+        Return top-k most similar chunks along with metadata.
         """
         
 
@@ -43,7 +43,7 @@ class VectorService:
         results = []
         seen = set()
 
-        for idx in indices[0]:
+        for rank, idx in enumerate(indices[0]):
             if idx == -1:
                 continue
 
@@ -57,16 +57,27 @@ class VectorService:
             # Filter by document only if requested 
 
             
-            if (document_id is not None and chunk["document_id"] != document_id):
+            if document_id is not None and chunk["document_id"] != document_id:
                 
                 continue
-            
 
-            if chunk["text"] not in seen:
-                seen.add(chunk["text"])
-                results.append(chunk)
+            if chunk["text"] in seen:
+                continue
 
-            if len(results) >= top_k:
+            seen.add(chunk["text"])
+
+            score = float(1 / (1 + distances[0][rank]))
+
+            results.append(
+                {
+                    "document_id": chunk["document_id"],
+                    "chunk_index": idx,
+                    "score": round(score, 4),
+                    "text": chunk["text"],
+                }
+            )
+
+            if len(results) == top_k:
                 break
 
         
