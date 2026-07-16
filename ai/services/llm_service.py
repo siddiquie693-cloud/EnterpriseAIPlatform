@@ -1,5 +1,6 @@
 from django.conf import settings
 from groq import APIError
+import json
 
 from ai.prompts import (
     CHAT_PROMPT,
@@ -50,12 +51,17 @@ class LLMService:
             raise LLMServiceError(f"Unexpected Error: {str(exc)}")
     
     @staticmethod
-    def summarize(text: str) -> str:
+    def summarize(text: str):
+        """
+        Generate a structured AI summary of a document.
+        Return a Python dictionary.
+        """
         try:
             logger.info("Generating document summary")
 
-            prompt = SUMMARY_PROMPT.format(
-                document=text
+            prompt = SUMMARY_PROMPT.replace(
+                "{document}",
+                text,
             )
             response = client.chat.completions.create(
                 model=settings.GROQ_MODEL,
@@ -69,15 +75,38 @@ class LLMService:
             )
             logger.info("Document summary generated successfully")
 
-            return response.choices[0].message.content
+            content = response.choices[0].message.content.strip()
+
+            # Remove Markdown code fences if present 
+            content = (
+                content.replace("```json", "")
+                .replace("```", "")
+                .strip()
+            )
+
+            try:
+                return json.loads(content)
         
+            except json.JSONDecodeError:
+                logger.warning("Groq return invalid JSON. Returing fallback response.")
+
+                return {
+
+                    "executive_summary": content,
+                    "bullet_summary": [],
+                    "key_topics": [],
+                    "keywords": [],
+                    "important_questions": [],
+                    "difficulty": "Unknown",
+                    "estimated_reading_time": "Unknown",
+                }
         except APIError as exc:
-            logger.exception("Groq Summary API Error")
-            raise LLMServiceError(f"Groq Summary Error: {str(exc)}")
-        
+                
+                logger.exception("Groq Summary API Error")
+                raise LLMServiceError(f"Groq Summary Error: {str(exc)}")
         except Exception as exc:
-            logger.exception("Unexpected Summary Error")
-            raise LLMServiceError(f"Unexpected Error: {str(exc)}")
+                logger.exception("Unexpected Summary Error")
+                raise LLMServiceError(f"Unexpected Error: {str(exc)}")
     
     @staticmethod
     def answer_question(document: str, question: str, history=None) -> str:
@@ -205,7 +234,59 @@ class LLMService:
 
         except Exception as exc:
             logger.exception("Unexpected Streaming Error")
-            yield f"\nError: {str(exc)}"        
+            yield f"\nError: {str(exc)}"
+
+    
+
+    @staticmethod
+    def summarize_document(document: str):
+        """
+        Generate structured AI documnet analysis.
+        """
+        try:
+            logger.info("Generating document analysis")
+
+            prompt = SUMMARY_PROMPT.format(
+                document=document,
+            )
+
+            response = client.chat.completions.create(
+                model=settings.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are an expert document analyst. "
+                        
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    },
+                ],
+                temperature=0.2,
+            )
+
+            content = response.choices[0].message.content.strip()
+
+            logger.info("Documnet analysis generated successfully")
+
+            return json.loads(content)
+
+        except json.JSONDecodeError:
+            logger.exception("Failed to parse JSON response")
+
+            raise LLMServiceError(
+                "LLM return invalid JSON."
+            )
+        
+        except APIError as exc:
+            logger.exception("Groq API Error")
+            raise LLMServiceError(str(exc))
+        
+        except Exception as exc:
+            logger.exception("Unexpected Error")
+            raise LLMServiceError(str(exc))
+                
 
 
 

@@ -5,12 +5,25 @@ Answer the user's question clearly and professionally.
 """
 
 SUMMARY_PROMPT = """
-You are an expert document summarizer.
+You are an expert AI document analyst.
 
-summarize the fillowing documnet into concise bullet points.
+Analyze the following document and return ONLY validd JSON.
+
+Return ONLY valid JSON.
+
+{
+    "executive_summary": "",
+    "bullet_summary": [],
+    "key_topics": [],
+    "keywords": [],
+    "important_questions": [],
+    "difficulty": "",
+    "estimated_reading_time": ""
+}
 
 Document:
 {document}
+
 """
 
 QUESTION_PROMPT = """

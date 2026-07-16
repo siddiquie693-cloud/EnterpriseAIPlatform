@@ -47,3 +47,8 @@ class ConversationSerializer(serializers.ModelSerializer):
             "messages",
         )
 
+class DocumentSummarySerializer(serializers.Serializer):
+    """
+    Serializer for document summarization request.
+    """
+    pass

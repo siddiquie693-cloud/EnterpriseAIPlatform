@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,15 +24,30 @@ class SummarizeAPIView(APIView):
                 {"detail": "document not found."},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        
         # Return cached summary if it already exist
-        if document.is_summarized:
-            return Response(
-                {
-                    "status": "success",
-                    "summary": document.summary,
-                    "cached": True,
-                }
-            )
+        if document.is_summarized and document.summary:
+            try:
+
+                cached_summary = json.loads(document.summary)
+                return Response(
+                    {
+                        "status": "success",
+                        "title": document.title,
+                        "executive_summary": cached_summary.get("executive_summary"),
+                        "bullet_summary": cached_summary.get("bullet_summary"),
+                        "key_topics": cached_summary.get("key_topics"),
+                        "keywords": cached_summary.get("keywords"),
+                        "important_questions": cached_summary.get("important_questions"),
+                        "difficulty": cached_summary.get("difficulty"),
+                        "estimated_reading_time": cached_summary.get("estimated_reading_time"),
+                        "cached": True,
+                    }
+                )
+            except json.JSONDecoderError:
+                # Old summaries were stored as plain text.
+                # Regenerate using the new structured prompt.
+                pass   
         
         # Extract document text
         text = DocumentService.extract_text(document.file.path)
@@ -38,15 +55,24 @@ class SummarizeAPIView(APIView):
         # Generate AI summary
         summary = LLMService.summarize(text)
 
-        # Save summary in DB
-        document.summary = summary
+        # Save structured summary
+
+        document.summary = json.dumps(summary)
         document.is_summarized = True
         document.save()
 
         return Response(
             {
                 "status": "success",
-                "summary": summary,
+                "title": document.title,
+                "executive_summary": summary.get("executive_summary"),
+                "bullet_summary": summary.get("bullet_summary"),
+                "key_topics": summary.get("key_topics"),
+                "keywords": summary.get("keywords"),
+                "important_questions": summary.get("important_questions"),
+                "difficulty": summary.get("difficulty"),
+                "estimated_reading_time": summary.get("estimated_reading_time"),
                 "cached": False,
             }
-        )    
+        )
+
