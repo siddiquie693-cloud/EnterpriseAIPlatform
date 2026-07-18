@@ -46,6 +46,8 @@ urlpatterns = [
     path("api/documents/", include("documents.urls")),
 
     path("api/ai/", include("ai.urls")),
+
+    path("api/search/", include("search.urls")),
 ]
 
 if settings.DEBUG:

@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "common",
     "users",
     "ai",
+    "search",
 ]
 
 MIDDLEWARE = [
