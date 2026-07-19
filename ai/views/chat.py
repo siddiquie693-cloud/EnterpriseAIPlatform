@@ -1,3 +1,4 @@
+import logging
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,6 +9,63 @@ from ai.serializers import ChatSerializer
 from ai.services.workflow import workflow
 from ai.models import Conversation, Message
 from ai.services.llm_service import LLMService
+
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiExample,
+    OpenApiResponse,
+)
+
+logger = logging.getLogger("enterprise_ai")
+
+@extend_schema(
+    tags=["AI Chat"],
+    summary="Chat with Enterprise AI Assistant",
+    description="""
+Interact with the Enterprise AI Assistant using Retrieval-Augmented Generation (RAG),
+LangGraph workflow, conversation memory, and citations.
+
+Features:
+- Document-aware responses
+- Conversation memory
+- AI-generated summaries
+- Source citations
+- Multi-turn conversations
+""",
+   request=ChatSerializer,
+   responses={
+       200: OpenApiResponse(
+           description="AI response generated successfully."
+       ),
+       400: OpenApiResponse(
+           description="Invalid request."
+       ),
+       404: OpenApiResponse(
+           description="Conversation not found."
+       ),
+       500: OpenApiResponse(
+           description="Internal server error."
+       ),
+   },
+   examples=[
+       OpenApiExample(
+           "New Conversation",
+           value={
+               "prompt": "What is Artificial Intelligence?"
+           },
+           request_only=True,
+       ),
+       OpenApiExample(
+           "Continue Conversation",
+           value={
+               "prompt": "give another example",
+               "conversation_id": 26
+           },
+           request_only=True,
+       ),
+   ],
+
+)
 
 class ChatAPIView(APIView):
     """
@@ -25,6 +83,10 @@ class ChatAPIView(APIView):
             )
             
         prompt = serializer.validated_data["prompt"]
+
+        logger.info(
+            f"Chat request received | User={request.user.id} | Prompt={prompt}"
+        )
 
         # Optional document ID
         document_id = request.data.get("document_id")
@@ -61,6 +123,10 @@ class ChatAPIView(APIView):
             conversation = Conversation.objects.create(
                 user=request.user,
                 title=title,
+            )
+
+            logger.info(
+                f"conversation created | ID={conversation.id}"
             )      
 
         # Save user message
@@ -80,7 +146,22 @@ class ChatAPIView(APIView):
             "conversation_id": conversation.id,
             "conversation_history": "",
         }
-        state = workflow.invoke(state)
+
+        try:
+            logger.info("Starting LangGraph workflow...")
+            
+            state = workflow.invoke(state)
+
+            logger.info("LangGraph workflow completed.")
+        except Exception:
+            logger.exception("LangGraph workflow failed")
+
+            return Response(
+                {
+                    "error": "Somethiing went wrong while generating the response."
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )    
 
         result = {
             "question": prompt,
@@ -95,6 +176,7 @@ class ChatAPIView(APIView):
                 }
             ),
             "citations": state["context"],
+            "conversation_id": conversation.id,
         }
 
         # Save AI response 
@@ -103,8 +185,11 @@ class ChatAPIView(APIView):
             role="assistant",
             content=result["answer"],
         )
-        result["conversation_id"] = conversation.id
 
+        logger.info(
+            f"Response generated | Conversation={conversation.id}"
+        )
+        
         return Response(
             result,
             status=status.HTTP_200_OK,

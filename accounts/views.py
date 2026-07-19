@@ -11,6 +11,36 @@ from .serializers import (
     ChangePasswordSerializer,
     LogoutSerializer,
 )
+
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiExample,
+    OpenApiResponse,
+)
+
+@extend_schema(
+    tags=["Authentication"],
+    summary="Register User",
+    description="Create a new user account.",
+    request=UserRegistrationSerializer,
+    responses={
+        201: OpenApiResponse(description="User registered successfully."),
+        400: OpenApiResponse(description="Validation failed."),
+    },
+    examples=[
+        OpenApiExample(
+            "Register",
+            value={
+                "username": "john",
+                "email": "john@example.com",
+                "password": "Password@123",
+                "password2": "Password@123",
+            },
+            request_only=True,
+        )
+    ],
+)
+
 class RegisterAPIView(APIView):
     """
     API for user registration.
@@ -37,6 +67,17 @@ class RegisterAPIView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
+@extend_schema(
+    tags=["Authentication"],
+    summary="Change Password",
+    description="Change the authenticated user's password.",
+    request=ChangePasswordSerializer,
+    responses={
+        200: OpenApiResponse(description="Password changed successfully."),
+        400: OpenApiResponse(description="Validation failed."),
+    },
+)
+
 class ChangePasswordAPIView(APIView):
     """
     API for changing the authenticated user's password.
@@ -77,11 +118,22 @@ class ChangePasswordAPIView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
+@extend_schema(
+    tags=["Authentication"],
+    summary="Logout",
+    description="Blacklist the refresh token and logout the current user.",
+    request=LogoutSerializer,
+    responses={
+        200: OpenApiResponse(description="Logout successful."),
+        400: OpenApiResponse(description="Invalid refresh token."),
+    },
+)
+    
 class LogoutAPIView(APIView):
     """
     API for logging out a user.
     """
-    permission_class = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         serializer = LogoutSerializer(data=request.data)

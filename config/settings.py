@@ -26,15 +26,19 @@ load_dotenv(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = config("DEBUG",default=True, cast=bool)
 
+ALLOWED_HOST = config(
+    "ALLOWED_HOST",
+    default="127.0.0.1,localhost",
+).split(",")
+        
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
     "django_filters",
     "corsheaders",
     "rest_framework_simplejwt.token_blacklist",
+    "drf_spectacular",
 
     # Local Apps
     "accounts",
@@ -167,6 +172,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": (
         "rest_framework.pagination.PageNumberPagination"
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    
 
     "PAGE_SIZE": 2,
     "DEFAULT_FILTER_BACKENDS": (
@@ -192,15 +199,42 @@ MEDIA_ROOT = BASE_DIR / "media"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+
+    "formatters": {
+        "standard": {
+            "format": "[{asctime}] {levelname} {name}: {message}",
+            "style": "{",
+        },
+    },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "app.log"),
+            "formatter": "standard",
         },
     },
     "loggers": {
         "enterprise_ai": {
-            "handlers": ["console"],
+            "handlers": ["console", "file"],
             "level": "INFO",
+            "propagate": False,
         },
     },
+
+    "root": {
+        "handlers": ["console", "file"],
+        "level": "INFO",
+    },
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "EnterpriseAIPlatform API",
+    "DESCRIPTION": "Enterprise AI Platform with RAG, LangGraph, Conversation Memory and AI Agents",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }

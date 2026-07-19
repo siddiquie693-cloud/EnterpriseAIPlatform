@@ -24,6 +24,10 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+)
 
 urlpatterns = [
     # Django Admin
@@ -48,6 +52,10 @@ urlpatterns = [
     path("api/ai/", include("ai.urls")),
 
     path("api/search/", include("search.urls")),
+
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+
+    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui",),
 ]
 
 if settings.DEBUG:

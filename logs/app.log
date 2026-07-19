@@ -1,0 +1,241 @@
+[2026-07-19 19:32:44,293] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 19:32:44,294] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 19:32:44,294] INFO faiss.loader: Loading faiss.
+[2026-07-19 19:32:44,828] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 19:32:47,191] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 19:32:47,196] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 19:44:53,467] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 19:45:13,748] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 19:45:13,749] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 19:45:13,750] INFO faiss.loader: Loading faiss.
+[2026-07-19 19:45:13,964] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 19:45:15,915] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 19:45:15,919] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 19:45:23,651] WARNING django.request: Not Found: /
+[2026-07-19 19:45:42,655] ERROR django.request: Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 207, in parse
+    self._initialise_endpoints()
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 190, in _initialise_endpoints
+    self.endpoints = self.inspector.get_api_endpoints()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 26, in get_api_endpoints
+    api_endpoints = self._get_api_endpoints(patterns, prefix)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 72, in _get_api_endpoints
+    nested_endpoints = self._get_api_endpoints(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 66, in _get_api_endpoints
+    if self.should_include_endpoint(path, callback):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\schemas\generators.py", line 120, in should_include_endpoint
+    if callback.cls.schema is None:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\schemas\inspectors.py", line 121, in __get__
+    assert issubclass(inspector_class, ViewInspector), (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: issubclass() arg 1 must be a class
+[2026-07-19 19:45:42,770] ERROR django.request: Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 207, in parse
+    self._initialise_endpoints()
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 190, in _initialise_endpoints
+    self.endpoints = self.inspector.get_api_endpoints()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 26, in get_api_endpoints
+    api_endpoints = self._get_api_endpoints(patterns, prefix)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 72, in _get_api_endpoints
+    nested_endpoints = self._get_api_endpoints(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\drf_spectacular\generators.py", line 66, in _get_api_endpoints
+    if self.should_include_endpoint(path, callback):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\schemas\generators.py", line 120, in should_include_endpoint
+    if callback.cls.schema is None:
+       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shoai\EnterpriseAIPlatform\venv\Lib\site-packages\rest_framework\schemas\inspectors.py", line 121, in __get__
+    assert issubclass(inspector_class, ViewInspector), (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: issubclass() arg 1 must be a class
+[2026-07-19 19:50:15,628] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\config\settings.py changed, reloading.
+[2026-07-19 19:50:19,797] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 19:50:44,767] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 19:50:44,769] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 19:50:44,770] INFO faiss.loader: Loading faiss.
+[2026-07-19 19:50:44,850] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 19:50:47,001] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 19:50:47,009] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 20:28:29,880] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\ai\views\chat.py changed, reloading.
+[2026-07-19 20:28:35,334] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 20:29:14,896] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 20:29:14,907] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 20:29:14,907] INFO faiss.loader: Loading faiss.
+[2026-07-19 20:29:14,956] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 20:29:17,113] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 20:29:17,122] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 20:30:06,946] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\ai\views\chat.py changed, reloading.
+[2026-07-19 20:30:10,954] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 20:30:26,930] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 20:30:26,932] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 20:30:26,932] INFO faiss.loader: Loading faiss.
+[2026-07-19 20:30:26,961] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 20:30:28,649] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 20:30:28,662] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 20:46:34,212] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\accounts\views.py changed, reloading.
+[2026-07-19 20:46:38,767] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 20:47:04,927] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 20:47:04,928] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 20:47:04,928] INFO faiss.loader: Loading faiss.
+[2026-07-19 20:47:05,117] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 20:47:07,348] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 20:47:07,349] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 20:53:53,107] WARNING django.request: Not Found: /api/register/
+[2026-07-19 21:01:25,008] WARNING django.request: Bad Request: /api/token/
+[2026-07-19 21:02:41,790] WARNING django.request: Not Found: /api/usersa/profile/
+[2026-07-19 21:05:33,415] WARNING django.request: Bad Request: /api/documents/upload/
+[2026-07-19 21:10:22,114] INFO enterprise_ai: Chat request received | User=5 | Prompt=What is the PAN No?
+[2026-07-19 21:10:22,114] INFO enterprise_ai: Generating conversation title
+[2026-07-19 21:10:23,269] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:10:23,365] INFO enterprise_ai: Conversation title generated successfully
+[2026-07-19 21:10:23,425] INFO enterprise_ai: conversation created | ID=28
+[2026-07-19 21:10:23,545] INFO enterprise_ai: Starting LangGraph workflow...
+[2026-07-19 21:10:23,815] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:10:24,299] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:10:24,301] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:10:24,303] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:10:24,811] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:10:24,820] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:10:24,820] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:10:25,234] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:10:25,241] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:10:25,244] INFO enterprise_ai: LangGraph workflow completed.
+[2026-07-19 21:10:25,253] INFO enterprise_ai: Response generated | Conversation=28
+[2026-07-19 21:11:55,243] INFO enterprise_ai: Chat request received | User=5 | Prompt=What is Artificial Intelligence?
+[2026-07-19 21:11:55,243] INFO enterprise_ai: Generating conversation title
+[2026-07-19 21:11:56,134] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:11:56,136] INFO enterprise_ai: Conversation title generated successfully
+[2026-07-19 21:11:56,152] INFO enterprise_ai: conversation created | ID=29
+[2026-07-19 21:11:56,159] INFO enterprise_ai: Starting LangGraph workflow...
+[2026-07-19 21:11:56,208] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:11:56,746] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:11:56,748] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:11:56,749] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:11:57,282] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:11:57,285] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:11:57,288] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:11:57,903] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:11:57,905] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:11:57,906] INFO enterprise_ai: LangGraph workflow completed.
+[2026-07-19 21:11:57,912] INFO enterprise_ai: Response generated | Conversation=29
+[2026-07-19 21:12:46,788] INFO enterprise_ai: Chat request received | User=5 | Prompt=Give one real-world example
+[2026-07-19 21:12:46,796] WARNING django.request: Not Found: /api/ai/chat/
+[2026-07-19 21:13:13,886] WARNING django.request: Bad Request: /api/ai/chat/
+[2026-07-19 21:13:42,562] WARNING django.request: Bad Request: /api/ai/chat/
+[2026-07-19 21:13:47,215] INFO enterprise_ai: Chat request received | User=5 | Prompt=What is artificial intelligence?
+[2026-07-19 21:13:47,216] INFO enterprise_ai: Generating conversation title
+[2026-07-19 21:13:47,881] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:13:47,923] INFO enterprise_ai: Conversation title generated successfully
+[2026-07-19 21:13:47,938] INFO enterprise_ai: conversation created | ID=30
+[2026-07-19 21:13:47,948] INFO enterprise_ai: Starting LangGraph workflow...
+[2026-07-19 21:13:48,019] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:13:49,007] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:13:49,026] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:13:49,033] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:13:49,827] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:13:49,829] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:13:49,830] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:13:50,442] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:13:50,445] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:13:50,447] INFO enterprise_ai: LangGraph workflow completed.
+[2026-07-19 21:13:50,458] INFO enterprise_ai: Response generated | Conversation=30
+[2026-07-19 21:14:23,786] INFO enterprise_ai: Chat request received | User=5 | Prompt=Give one real-world example
+[2026-07-19 21:14:23,800] INFO enterprise_ai: Starting LangGraph workflow...
+[2026-07-19 21:14:23,859] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:14:25,171] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:14:25,176] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:14:25,178] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:14:25,795] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:14:25,796] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:14:25,799] INFO enterprise_ai: Sending chat request to Groq
+[2026-07-19 21:14:26,361] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-19 21:14:26,367] INFO enterprise_ai: Chat response received successfully
+[2026-07-19 21:14:26,369] INFO enterprise_ai: LangGraph workflow completed.
+[2026-07-19 21:14:26,378] INFO enterprise_ai: Response generated | Conversation=30
+[2026-07-19 21:28:51,317] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\config\settings.py changed, reloading.
+[2026-07-19 21:29:00,108] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 21:29:57,404] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 21:29:57,405] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 21:29:57,406] INFO faiss.loader: Loading faiss.
+[2026-07-19 21:29:57,629] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 21:29:59,891] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 21:29:59,902] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
