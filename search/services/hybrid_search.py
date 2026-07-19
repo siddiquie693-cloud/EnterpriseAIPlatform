@@ -54,3 +54,4 @@ class HybridSearchService:
         return {
             "results": final_results,
         }
+    
