@@ -8,26 +8,31 @@ class AnswerAgent:
 
     def __call__(self, state: AgentState) -> AgentState:
         answer = LLMService.chat(
-            prompt=(
+            prompt=
                 f"""
 You are an Enterprise AI Assistant. 
 
-Use the following summary to answer the user's question accurately. 
+Previous Conversation:
+{state["conversation_history"]}
 
-Summary:
+Document Summary:
 {state["summary"]}
 
-Question:
+Current User Question:
 {state["question"]}
 
 Instructions:
-- Answer only from the summary. 
-- Be concise. 
-- If the answer is not available, say so politely. 
+- Use the previous conversation whenever it is relevant.
+- If the current question refers to earlier messages (for example: "it", "that", "explain more", "give another example"), use the conversation history to understand the reference.
+- Answer using the document summary.
+- If the answer is not available in the summary, politely say so.
+- Keep the answer concise and accurate.
 """
-            )
         )
 
         state["answer"] = answer
 
         return state
+
+
+

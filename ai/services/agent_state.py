@@ -7,3 +7,7 @@ class AgentState(TypedDict):
     research: str
     summary: str
     answer: str
+    
+    conversation_id: int | None
+
+    conversation_history: str

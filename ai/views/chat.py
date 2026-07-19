@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from django.http import StreamingHttpResponse
 
 from ai.serializers import ChatSerializer
-from ai.services.rag_service import RAGService
+from ai.services.workflow import workflow
 from ai.models import Conversation, Message
 from ai.services.llm_service import LLMService
 
@@ -70,13 +70,32 @@ class ChatAPIView(APIView):
             content=prompt,
         )    
 
-        rag_service = RAGService()
+        state = {
+            "question": prompt,
+            "document_id": document_id,
+            "context": [],
+            "research": "",
+            "summary": "",
+            "answer": "",
+            "conversation_id": conversation.id,
+            "conversation_history": "",
+        }
+        state = workflow.invoke(state)
 
-        result = rag_service.answer_question(
-            question=prompt, 
-            document_id=document_id,
-            conversation_id=conversation.id,
-        )
+        result = {
+            "question": prompt,
+            "answer": state["answer"],
+            "summary": state["summary"],
+            "research": state["research"],
+            "context": state["context"],
+            "sources": list(
+                {
+                    item["document_id"]
+                    for item in state["context"]
+                }
+            ),
+            "citations": state["context"],
+        }
 
         # Save AI response 
         Message.objects.create(
