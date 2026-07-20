@@ -7,8 +7,16 @@ from ai.serializers import QuestionSerializer
 from documents.models import Document
 from ai.services.rag_service import RAGService
 
+from drf_spectacular.utils import extend_schema
+
+@extend_schema(
+    request=QuestionSerializer,
+    responses={200: dict},
+)
+
 class AskQuestionAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = QuestionSerializer
 
     def post(self, request, document_id):
         serializer = QuestionSerializer(data=request.data)

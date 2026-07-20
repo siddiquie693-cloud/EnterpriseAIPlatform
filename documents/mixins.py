@@ -5,7 +5,12 @@ class DocumentQuerysetMixin:
     Provides a queryset based on the authenticated user's role.
     """
     include_inactive = False
+
     def get_queryset(self):
+        # Fix for drf-dpectacular schema generation
+        if getattr(self, "swagger_fake_view", False):
+            return Document.objects.none()
+        
         user = self.request.user
 
         queryset = Document.objects.all()

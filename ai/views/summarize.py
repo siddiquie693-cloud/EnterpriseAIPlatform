@@ -11,8 +11,17 @@ from ai.chains.summarize_chain import summary_chain
 from ai.services.document_service import DocumentService
 from ai.services.llm_service import LLMService
 
+from drf_spectacular.utils import extend_schema
+from ai.serializers import DocumentSummarySerializer
+
+@extend_schema(
+    request=DocumentSummarySerializer,
+    responses={200: dict},
+)
+
 class SummarizeAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = DocumentSummarySerializer
 
     def post(self, request, document_id):
         try:

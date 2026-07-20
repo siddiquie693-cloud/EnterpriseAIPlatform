@@ -239,3 +239,61 @@ ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
 [2026-07-19 21:29:57,629] INFO faiss.loader: Successfully loaded faiss.
 [2026-07-19 21:29:59,891] INFO sentence_transformers.base.model: No device provided, using cpu
 [2026-07-19 21:29:59,902] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 21:34:18,518] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 21:34:32,908] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 21:34:32,908] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 21:34:32,909] INFO faiss.loader: Loading faiss.
+[2026-07-19 21:34:32,947] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 21:34:34,759] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 21:34:34,769] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 22:34:34,951] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\documents\mixins.py changed, reloading.
+[2026-07-19 22:34:46,493] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 22:35:41,552] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 22:35:41,552] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 22:35:41,552] INFO faiss.loader: Loading faiss.
+[2026-07-19 22:35:41,789] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 22:35:44,606] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 22:35:44,618] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 22:43:08,610] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\ai\views\summarize.py changed, reloading.
+[2026-07-19 22:43:13,726] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 22:43:37,642] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 22:43:37,643] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 22:43:37,643] INFO faiss.loader: Loading faiss.
+[2026-07-19 22:43:37,709] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 22:43:40,126] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 22:43:40,132] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-19 22:48:33,042] INFO django.utils.autoreload: C:\Users\shoai\EnterpriseAIPlatform\ai\views\summarize.py changed, reloading.
+[2026-07-19 22:48:37,531] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-19 22:48:59,416] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-19 22:48:59,417] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-19 22:48:59,417] INFO faiss.loader: Loading faiss.
+[2026-07-19 22:48:59,483] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-19 22:49:01,774] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-19 22:49:01,780] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-20 19:40:09,011] INFO django.utils.autoreload: Watching for file changes with StatReloader
+[2026-07-20 19:41:10,122] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-20 19:41:10,133] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-20 19:41:10,134] INFO faiss.loader: Loading faiss.
+[2026-07-20 19:41:10,787] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-20 19:41:13,352] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-20 19:41:15,670] INFO httpx: HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+[2026-07-20 19:41:15,740] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[2026-07-20 19:49:58,340] WARNING django.request: Not Found: /api/ai/question/14/
+[2026-07-20 19:50:31,537] INFO enterprise_ai: Answering question from document
+[2026-07-20 19:50:32,773] INFO httpx: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-07-20 19:50:32,832] INFO enterprise_ai: Question answered successfully
+[2026-07-20 19:51:51,528] WARNING django.request: Method Not Allowed: /api/docs/
+[2026-07-20 19:52:29,148] WARNING django.request: Not Found: /
+[2026-07-20 19:52:51,605] WARNING django.request: Not Found: /docs/
+[2026-07-20 19:57:00,252] INFO faiss.loader: Loading faiss with AVX2 support.
+[2026-07-20 19:57:00,253] INFO faiss.loader: Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-07-20 19:57:00,253] INFO faiss.loader: Loading faiss.
+[2026-07-20 19:57:00,303] INFO faiss.loader: Successfully loaded faiss.
+[2026-07-20 19:57:02,088] INFO sentence_transformers.base.model: No device provided, using cpu
+[2026-07-20 19:57:02,127] INFO sentence_transformers.base.model: Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.

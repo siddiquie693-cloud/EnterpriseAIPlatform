@@ -6,6 +6,12 @@ from rest_framework.views import APIView
 from search.services.hybrid_search import HybridSearchService
 from search.serializers import SearchSerializer
 
+from drf_spectacular.utils import extend_schema
+@extend_schema(
+    request=SearchSerializer,
+    responses={200: dict},
+)
+
 class HybridSearchAPIView(APIView):
     """
     Hybrid Search API
@@ -13,6 +19,8 @@ class HybridSearchAPIView(APIView):
     """
 
     permission_classes = [IsAuthenticated]
+
+    serializer_class = SearchSerializer
 
     def post(self, request):
         serializer = SearchSerializer(data=request.data)

@@ -11,6 +11,7 @@ from .serializers import (
     UserUpdateSerializer,
     UserStatusSerializer,
 )
+from drf_spectacular.utils import extend_schema
 from .permissions import IsAdmin
 
 User = get_user_model()
@@ -25,12 +26,18 @@ class UserProfileAPIView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+@extend_schema(
+    request=AssignGroupSerializer,
+    responses={200: dict},
+)
 
 class AssignGroupAPIView(APIView):
     """
     Assign a user to a group.
     """
     permission_classes = [IsAdmin]
+    serializer_class = AssignGroupSerializer
 
     def post(self, request):
         serializer = AssignGroupSerializer(data=request.data)
