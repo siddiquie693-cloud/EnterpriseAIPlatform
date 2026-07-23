@@ -20,3 +20,10 @@ staticfiles/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Static files
+staticfiles/

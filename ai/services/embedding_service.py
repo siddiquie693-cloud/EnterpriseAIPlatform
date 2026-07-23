@@ -11,7 +11,7 @@ class EmbeddingService:
         if EmbeddingService._model is None:
             EmbeddingService._model = SentenceTransformer(
                 "sentence-transformers/all-MiniLM-L6-v2",
-                local_files_only=True,
+                local_files_only=False,
             )
 
         self.model = EmbeddingService._model
