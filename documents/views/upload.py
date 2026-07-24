@@ -16,4 +16,4 @@ class DocumentUploadAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
        document = serializer.save(uploaded_by=self.request.user)
-       DocumentIndexService().index_document(document)
+       #DocumentIndexService().index_document(document)

@@ -9,6 +9,8 @@ class EmbeddingService:
 
     def __init__(self):
         if EmbeddingService._model is None:
+            from sentence_transformers import SentenceTransformer
+            
             EmbeddingService._model = SentenceTransformer(
                 "sentence-transformers/all-MiniLM-L6-v2",
                 local_files_only=False,

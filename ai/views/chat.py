@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from django.http import StreamingHttpResponse
 
 from ai.serializers import ChatSerializer
-from ai.services.workflow import workflow
+from ai.services.workflow import build_workflow
 from ai.models import Conversation, Message
 from ai.services.llm_service import LLMService
 
@@ -149,7 +149,8 @@ class ChatAPIView(APIView):
 
         try:
             logger.info("Starting LangGraph workflow...")
-            
+
+            workflow = build_workflow()
             state = workflow.invoke(state)
 
             logger.info("LangGraph workflow completed.")
