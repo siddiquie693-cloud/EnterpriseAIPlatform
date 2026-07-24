@@ -5,6 +5,8 @@ DEBUG = False
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    "enterprise-ai-platform-vvl0.onrender.com",
+
 ]
 
 SECURE_BROWSER_XSS_FILTER = True
@@ -14,4 +16,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = [
+    "https://enterprise-ai-platform-vvl0.onrender.com",
+]

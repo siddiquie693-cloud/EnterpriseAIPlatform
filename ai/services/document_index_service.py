@@ -10,7 +10,7 @@ class DocumentIndexService:
     def __init__(self):
         self.document_service = DocumentService()
         self.chunking_service = ChunkingService()
-        self.embedding_service = EmbeddingService()
+        self.embedding_service = None
         self.vector_service = VectorService()
 
     def index_document(self, document):
