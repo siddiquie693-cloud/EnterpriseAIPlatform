@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from documents.models import Document
-from ai.chains.summarize_chain import summary_chain
 
 from ai.services.document_service import DocumentService
 from ai.services.llm_service import LLMService
@@ -61,6 +60,8 @@ class SummarizeAPIView(APIView):
         
         # Extract document text
         text = DocumentService.extract_text(document.file.path)
+
+        from ai.chains.summarize_chain import summary_chain
 
         # Generate AI summary
         summary = summary_chain.invoke(
