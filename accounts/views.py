@@ -46,7 +46,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                     "username": "john",
                     "email": "john@example.com",
                     "password": "Password@123",
-                    "password2": "Password@123",
+                    "first_name": "John",
+                    "last_name": "Doe",
                 },
                 request_only=True,
             )
@@ -64,13 +65,14 @@ class RegisterAPIView(APIView):
         logger.info("Register API called")
         try:
             serializer = UserRegistrationSerializer(data=request.data)
+            logger.info(f"Incoming data: {request.data}")
 
             if serializer.is_valid():
-                logger.info("Serializer validation successful")
+                logger.info("Serializer is valid")
                 user = serializer.save()
 
                 logger.info(
-                    f"User created successfully | ID={user.id} | Username={user.username}"
+                    f"User created successfully: {user.username}"
                 )
 
                 return Response(
@@ -89,18 +91,21 @@ class RegisterAPIView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        except Exception as e:
-            logger.exception(f"Register API failed: {str(e)}")
+        except Exception:
+            logger.exception("REGISTER FAILED")
+            raise
+            
 
-            return Response(
-                {
-                    "status": "error",
-                    "message": "Internal Server Error",
-                    "error": str(e),
-                },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
-
+@extend_schema(
+    tags=["Authentication"],
+    summary="Change Password",
+    description="Change the authenticated user's password.",
+    request=ChangePasswordSerializer,
+    responses={
+        200: OpenApiResponse(description="Password changed successfully."),
+        400: OpenApiResponse(description="Validation failed."),
+    },
+)
 
 class ChangePasswordAPIView(APIView):
     """
@@ -142,6 +147,7 @@ class ChangePasswordAPIView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
+
 @extend_schema(
     tags=["Authentication"],
     summary="Logout",
