@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,37 +15,47 @@ from .serializers import (
 
 from drf_spectacular.utils import (
     extend_schema,
+    extend_schema_view,
     OpenApiExample,
     OpenApiResponse,
 )
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import AllowAny
 
-@extend_schema(
-    tags=["Authentication"],
-    summary="Register User",
-    description="Create a new user account.",
-    request=UserRegistrationSerializer,
-    responses={
-        201: OpenApiResponse(description="User registered successfully."),
-        400: OpenApiResponse(description="Validation failed."),
-    },
-    examples=[
-        OpenApiExample(
-            "Register",
-            value={
-                "username": "john",
-                "email": "john@example.com",
-                "password": "Password@123",
-                "password2": "Password@123",
-            },
-            request_only=True,
-        )
-    ],
+class CustomTokenObtainPairView(TokenObtainPairView):
+    permission_classes = [AllowAny]
+
+@extend_schema_view(
+    post=extend_schema(
+        tags=["Authentication"],
+        summary="Register User",
+        description="Create a new user account.",
+        request=UserRegistrationSerializer,
+        auth=[],
+        responses={
+            201: OpenApiResponse(description="User registered successfully."),
+            400: OpenApiResponse(description="Validation failed."),
+        },
+        examples=[
+            OpenApiExample(
+                "Register",
+                value={
+                    "username": "john",
+                    "email": "john@example.com",
+                    "password": "Password@123",
+                    "password2": "Password@123",
+                },
+                request_only=True,
+            )
+        ],
+    )
 )
 
 class RegisterAPIView(APIView):
     """
     API for user registration.
     """
+    permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
@@ -67,16 +78,7 @@ class RegisterAPIView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
-@extend_schema(
-    tags=["Authentication"],
-    summary="Change Password",
-    description="Change the authenticated user's password.",
-    request=ChangePasswordSerializer,
-    responses={
-        200: OpenApiResponse(description="Password changed successfully."),
-        400: OpenApiResponse(description="Validation failed."),
-    },
-)
+
 
 class ChangePasswordAPIView(APIView):
     """
