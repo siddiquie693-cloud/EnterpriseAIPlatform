@@ -21,6 +21,9 @@ from drf_spectacular.utils import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     permission_classes = [AllowAny]
@@ -58,26 +61,45 @@ class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = UserRegistrationSerializer(data=request.data)
+        logger.info("Register API called")
+        try:
+            serializer = UserRegistrationSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
+            if serializer.is_valid():
+                logger.info("Serializer validation successful")
+                user = serializer.save()
+
+                logger.info(
+                    f"User created successfully | ID={user.id} | Username={user.username}"
+                )
+
+                return Response(
+                    {
+                        "status": "success",
+                        "message": "User registered successfully.",
+                        "data": serializer.data,
+                    },
+                    status=status.HTTP_201_CREATED,
+                )
+            logger.error(f"Serializer validation failed: {serializer.errors}")
+            return Response(
+                {
+                    "status": "error",
+                    "errors": serializer.errors,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Exception as e:
+            logger.exception(f"Register API failed: {str(e)}")
 
             return Response(
                 {
-                    "status": "success",
-                    "message": "User registered successfully.",
-                    "data": serializer.data,
+                    "status": "error",
+                    "message": "Internal Server Error",
+                    "error": str(e),
                 },
-                status=status.HTTP_201_CREATED,
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-        return Response(
-            {
-                "status": "error",
-                "errors": serializer.errors,
-            },
-            status=status.HTTP_400_BAD_REQUEST,
-        )
 
 
 class ChangePasswordAPIView(APIView):
